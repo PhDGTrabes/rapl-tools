@@ -44,31 +44,31 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	Rapl *rapl = new Rapl();
+	Rapl *rapl = new Rapl(0);
 	while (rapl->total_time() < runtime) {
 		usleep(1000 * ms_pause);
-		rapl->sample();
+		rapl->measure();
 
 		// Write sample to outfile
 		if (use_outfile) {
-			outfile << rapl->pkg_current_power() << ","
-					<< rapl->pp0_current_power() << ","
-					<< rapl->pp1_current_power() << ","
-					<< rapl->dram_current_power() << ","
+			outfile << rapl->pkg_current_power(0) << ","
+					<< rapl->pp0_current_power(0) << ","
+					<< rapl->pp1_current_power(0) << ","
+					<< rapl->dram_current_power(0) << ","
 					<< rapl->total_time() << endl;
 		}
 
 		// Write sample to terminal
 		cout << "\33[2K\r" // clear line
-				<< "power=" << rapl->pkg_current_power()
+				<< "power=" << rapl->pkg_current_power(0)
 				<< "\tTime=" << rapl->current_time();
 		cout.flush();
 	}
 
 	// Print totals
 	cout << endl 
-		<< "\tTotal Energy:\t" << rapl->pkg_total_energy() << " J" << endl
-		<< "\tAverage Power:\t" << rapl->pkg_average_power() << " W" << endl
+		<< "\tTotal Energy:\t" << rapl->pkg_total_energy(0) << " J" << endl
+		<< "\tAverage Power:\t" << rapl->pkg_average_power(0) << " W" << endl
 		<< "\tTime:\t" << rapl->total_time() << " sec" << endl;
 
 	return 0;

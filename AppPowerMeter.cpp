@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[]) {
 
-	Rapl *rapl = new Rapl();
+	Rapl *rapl = new Rapl(0);
 	int ms_pause = 100;       // sample every 100ms
 	std::ofstream outfile ("rapl.csv", std::ios::out | std::ios::trunc);
 
@@ -34,11 +34,11 @@ int main(int argc, char *argv[]) {
 				usleep(ms_pause * 1000);
 
 				// rapl sample
-				rapl->sample();
-				outfile << rapl->pkg_current_power() << ","
-					<< rapl->pp0_current_power() << ","
-					<< rapl->pp1_current_power() << ","
-					<< rapl->dram_current_power() << ","
+				rapl->measure();
+				outfile << rapl->pkg_current_power(0) << ","
+					<< rapl->pp0_current_power(0) << ","
+					<< rapl->pp1_current_power(0) << ","
+					<< rapl->dram_current_power(0) << ","
 					<< rapl->total_time() << std::endl;
 
 				waitpid(child_pid, &status, WNOHANG);	
@@ -49,8 +49,8 @@ int main(int argc, char *argv[]) {
 				<< std::endl;
 			
 			std::cout << std::endl 
-				<< "\tTotal Energy:\t" << rapl->pkg_total_energy() << " J" << std::endl
-				<< "\tAverage Power:\t" << rapl->pkg_average_power() << " W" << std::endl
+				<< "\tTotal Energy:\t" << rapl->pkg_total_energy(0) << " J" << std::endl
+				<< "\tAverage Power:\t" << rapl->pkg_average_power(0) << " W" << std::endl
 				<< "\tTime:\t" << rapl->total_time() << " sec" << std::endl;
 		}
 	} else {
