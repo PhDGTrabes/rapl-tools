@@ -565,6 +565,7 @@ double Rapl::dram_average_power(int package) {
 double Rapl::pkg_total_energy(int package) {
 	//return cpu_energy_units[package] * ((double) running_total[package].pkg);
 	return ((double) running_total[package].pkg);
+
 }
 
 double Rapl::pp0_total_energy(int package) {
