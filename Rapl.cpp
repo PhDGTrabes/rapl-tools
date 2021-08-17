@@ -355,7 +355,7 @@ Rapl::Rapl(int core) {
 
 void Rapl::reset() {
 
-	for(int j=0;j<total_packages;j++){
+	for(j=0;j<total_packages;j++){
 		prev_state[j] = &state1[j];
 		current_state[j] = &state2[j];
 		next_state[j] = &state3[j];
@@ -374,6 +374,12 @@ void Rapl::reset() {
 		current_state[j]->pp1 = 0.0;
 		current_state[j]->dram = 0.0;
 		current_state[j]->psys = 0.0;
+
+		prev_state[j]->pkg = 0;
+		prev_state[j]->pp0 = 0;
+		prev_state[j]->pp1 = 0;
+		prev_state[j]->dram = 0;
+		prev_state[j]->psys = 0;
 
 		next_state[j]->pkg = 0.0;
 		next_state[j]->pp0 = 0.0;
@@ -477,6 +483,8 @@ void Rapl::measure() {
 
 		close(fd);
 
+		gettimeofday(&(next_state[j]->tsc), NULL);
+
 		next_state[j]->pkg = package_before[j];
 		next_state[j]->pp0 = pp0_before[j];
 		next_state[j]->pp1 = pp1_before[j];
@@ -490,9 +498,11 @@ void Rapl::measure() {
 		cout << "dram" << next_state[j]->dram << endl;
 */
 
-		gettimeofday(&(next_state[j]->tsc), NULL);
+		//gettimeofday(&(next_state[j]->tsc), NULL);
 
 /*
+=======
+>>>>>>> 62fcafa95e245bb78fa4b20b466ae64275b1c057
 		// Update running total
 		running_total[j].pkg += energy_delta(current_state[j]->pkg, next_state[j]->pkg);
 		running_total[j].pp0 += energy_delta(current_state[j]->pp0, next_state[j]->pp0);
@@ -641,6 +651,8 @@ double Rapl::power(uint64_t before, uint64_t after, double time_delta, int packa
 	if (time_delta == 0.0f || time_delta == -0.0f) { return 0.0; }
 	double energy = cpu_energy_units[package] * ((double) energy_delta(before,after));
 	//double energy = ((double) energy_delta(before,after));
+	//double energy = cpu_energy_units[package] * ((double) energy_delta(before,after));
+	double energy = ((double) energy_delta(before,after));
 	return energy / time_delta;
 }
 
@@ -693,7 +705,7 @@ double Rapl::pp1_average_power(int package) {
 }
 
 double Rapl::dram_average_power(int package) {
-	return dram_total_energy(package) / total_time();
+	return dram_total_energy(package)/total_time();
 }
 
 double Rapl::pkg_total_energy(int package) {
