@@ -649,7 +649,7 @@ double Rapl::time_delta(struct timeval *begin, struct timeval *end) {
 
 double Rapl::power(uint64_t before, uint64_t after, double time_delta, int package) {
 	if (time_delta == 0.0f || time_delta == -0.0f) { return 0.0; }
-	double energy = cpu_energy_units[package] * ((double) energy_delta(before,after));
+	//double energy = cpu_energy_units[package] * ((double) energy_delta(before,after));
 	//double energy = ((double) energy_delta(before,after));
 	//double energy = cpu_energy_units[package] * ((double) energy_delta(before,after));
 	double energy = ((double) energy_delta(before,after));
