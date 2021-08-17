@@ -209,7 +209,8 @@ private:
 	rapl_state_t *current_state[MAX_PACKAGES];
 	rapl_state_t *prev_state[MAX_PACKAGES];
 	rapl_state_t *next_state[MAX_PACKAGES];
-	rapl_state_t state1[MAX_PACKAGES], state2[MAX_PACKAGES], state3[MAX_PACKAGES], running_total[MAX_PACKAGES];
+	rapl_state_t running_total[MAX_PACKAGES];
+	rapl_state_t state1[MAX_PACKAGES], state2[MAX_PACKAGES], state3[MAX_PACKAGES];
 
 	int detect_cpu();
 	int detect_packages();
@@ -221,9 +222,13 @@ private:
 	double power(uint64_t before, uint64_t after, double time_delta, int package);
 
 public:
+
+	void hardware_info();
 	Rapl(int core);
 	void reset();
 	void measure();
+	void measure_begin();
+	void measure_end();
 
 	double pkg_current_power(int package);
 	double pp0_current_power(int package);
@@ -239,6 +244,12 @@ public:
 	double pp0_total_energy(int package);
 	double pp1_total_energy(int package);
 	double dram_total_energy(int package);
+	
+	double total_energy_per_package(int package);
+	double total_power_per_package(int package);
+
+	double total_energy();
+        double total_power();
 
 	double total_time();
 	double current_time();
