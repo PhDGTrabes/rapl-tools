@@ -162,7 +162,7 @@
 #include <cstdint>
 
 
-static unsigned int msr_rapl_units,msr_pkg_energy_status,msr_pp0_energy_status;
+//static unsigned int msr_rapl_units,msr_pkg_energy_status,msr_pp0_energy_status;
 
 
 #ifndef RAPL_H_
@@ -201,6 +201,8 @@ private:
 	double thermal_spec_power,minimum_power,maximum_power,time_window;
 	int j;
 
+	//static unsigned int msr_rapl_units,msr_pkg_energy_status,msr_pp0_energy_status;
+
 	int dram_avail=0,pp0_avail=0,pp1_avail=0,psys_avail=0;
 	int different_units=0;
 
@@ -222,6 +224,8 @@ private:
 	double power(uint64_t before, uint64_t after, double time_delta, int package);
 
 public:
+
+	unsigned int msr_rapl_units,msr_pkg_energy_status,msr_pp0_energy_status;
 
 	void hardware_info();
 	Rapl(int core);
