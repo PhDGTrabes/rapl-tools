@@ -588,38 +588,38 @@ void Rapl::measure_end() {
 
 		fd=open_msr(package_map[j]);
 
-		printf("\tPackage %d:\n",j);
+		//printf("\tPackage %d:\n",j);
 
 		result=read_msr(fd,msr_pkg_energy_status);
 		package_after[j]=(double)result*cpu_energy_units[j];
-		printf("\t\tPackage energy: %.6fJ\n",
-			package_after[j]-package_before[j]);
+		//printf("\t\tPackage energy: %.6fJ\n",
+		//	package_after[j]-package_before[j]);
 
 		result=read_msr(fd,msr_pp0_energy_status);
 		pp0_after[j]=(double)result*cpu_energy_units[j];
-		printf("\t\tPowerPlane0 (cores): %.6fJ\n",
-			pp0_after[j]-pp0_before[j]);
+		//printf("\t\tPowerPlane0 (cores): %.6fJ\n",
+		//	pp0_after[j]-pp0_before[j]);
 
 		/* not available on SandyBridge-EP */
 		if (pp1_avail) {
 			result=read_msr(fd,MSR_PP1_ENERGY_STATUS);
 			pp1_after[j]=(double)result*cpu_energy_units[j];
-			printf("\t\tPowerPlane1 (on-core GPU if avail): %.6f J\n",
-				pp1_after[j]-pp1_before[j]);
+			//printf("\t\tPowerPlane1 (on-core GPU if avail): %.6f J\n",
+			//	pp1_after[j]-pp1_before[j]);
 		}
 
 		if (dram_avail) {
 			result=read_msr(fd,MSR_DRAM_ENERGY_STATUS);
 			dram_after[j]=(double)result*dram_energy_units[j];
-			printf("\t\tDRAM: %.6fJ\n",
-				dram_after[j]-dram_before[j]);
+			//printf("\t\tDRAM: %.6fJ\n",
+			//	dram_after[j]-dram_before[j]);
 		}
 
 		if (psys_avail) {
 			result=read_msr(fd,MSR_PLATFORM_ENERGY_STATUS);
 			psys_after[j]=(double)result*cpu_energy_units[j];
-			printf("\t\tPSYS: %.6fJ\n",
-				psys_after[j]-psys_before[j]);
+			//printf("\t\tPSYS: %.6fJ\n",
+			//	psys_after[j]-psys_before[j]);
 		}
 
 		close(fd);
@@ -631,8 +631,8 @@ void Rapl::measure_end() {
                 running_total[j].psys = psys_after[j]-psys_before[j];
 
 
-	std::cout << "\t\tTime: "<< time_delta(&(current_state[0]->tsc), &(next_state[0]->tsc)) << std::endl;
-	std:cout << "\t\tAverage Power: " << (package_after[j]-package_before[j])/(time_delta(&(current_state[0]->tsc), &(next_state[0]->tsc))) << std::endl;
+	//std::cout << "\t\tTime: "<< time_delta(&(current_state[0]->tsc), &(next_state[0]->tsc)) << std::endl;
+	//std:cout << "\t\tAverage Power: " << (package_after[j]-package_before[j])/(time_delta(&(current_state[0]->tsc), &(next_state[0]->tsc))) << std::endl;
 	
 	}
 
